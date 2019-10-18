@@ -46,7 +46,8 @@ Default:
   theme: '',
   animateOpen: true,
   animateClose: true,
-  useToJSON: true
+  useToJSON: true,
+  pathsToCollapse: ["web-app.servlet.0.init-param", "web-app.servlet.1.something-else"]
 }
 ```
 Available configurations:
@@ -66,6 +67,21 @@ Available configurations:
 * `useToJSON`: use the toJSON method to render an object as a string as available. Usefull for objects like Date or Mongo's ObjectID that migh make more sense as a strign than as empty objects. True by default.
 
 * `sortPropertiesBy`: use the given sorting function to deeply sort the object properties.
+
+* `pathsToCollapse`: use to collapse specific paths only. Example usage:
+
+```js
+const formatter = new Formatter(
+  { ... },
+  9999, // open depth
+  {
+      pathsToCollapse: [
+          'web-app.servlet.0.init-param'
+      ]
+  } 
+);
+document.body.appendChild(formatter.render());
+```
 
 #### `openAtDepth([depth])`
 
