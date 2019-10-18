@@ -26,6 +26,7 @@ export interface JSONFormatterConfiguration {
   animateClose?: boolean;
   theme?: string;
   useToJSON?: boolean;
+  pathsToCollapse?: string[],
   sortPropertiesBy?: (a: string, b: string) => number;
 };
 
@@ -37,7 +38,8 @@ const _defaultConfig: JSONFormatterConfiguration = {
   animateClose: true,
   theme: null,
   useToJSON: true,
-  sortPropertiesBy: null
+  sortPropertiesBy: null,
+  pathsToCollapse: []
 };
 
 
@@ -83,7 +85,7 @@ export default class JSONFormatter {
    * @param {string} [key=undefined] The key that this object in it's parent
    * context
   */
-  constructor(public json: any, private open = 1, private config: JSONFormatterConfiguration = _defaultConfig, private key?: string) {
+  constructor(public json: any, private open = 1, private config: JSONFormatterConfiguration = _defaultConfig, private key?: string, private path: string = '') {
 
     // Setting default values for config object
     if (this.config.hoverPreviewEnabled === undefined) {
@@ -97,6 +99,9 @@ export default class JSONFormatter {
     }
     if (this.config.useToJSON === undefined) {
       this.config.useToJSON = _defaultConfig.useToJSON;
+    }
+    if (this.config.pathsToCollapse === undefined) {
+      this.config.pathsToCollapse = _defaultConfig.pathsToCollapse;
     }
   }
 
@@ -437,7 +442,12 @@ export default class JSONFormatter {
 
     } else {
       this.keys.forEach(key => {
-        const formatter = new JSONFormatter(this.json[key], this.open - 1, this.config, key);
+        // Generate the full path
+        const updatedPath = (this.path.length > 0 ? this.path + '.' : '') + key;
+        // Collapse specified paths, or fallback to the `open` depth
+        const isOpen = this.config.pathsToCollapse.includes(updatedPath) ? 0 : this.open - 1;
+        // Create child formatted element
+        const formatter = new JSONFormatter(this.json[key], isOpen, this.config, key, updatedPath);
         children.appendChild(formatter.render());
       });
     }

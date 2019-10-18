@@ -7,7 +7,15 @@ function render() {
     live.style.backgroundColor = 'transparent';
     var result = document.getElementById('live-result');
     try {
-        var formatter = new JSONFormatter(JSON.parse(live.value), 1, { hoverPreviewEnabled: hoverPreviewEnabledCheckbox.checked });
+        const formatter = new JSONFormatter(
+            JSON.parse(live.value),
+            99999,
+            {
+                pathsToCollapse: [
+                    'web-app.servlet.0.init-param'
+                ]
+            }
+        );
         result.innerHTML = '';
         result.appendChild(formatter.render());
     } catch (e) {
