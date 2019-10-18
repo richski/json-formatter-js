@@ -6,8 +6,9 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "lib": [
+            "es6",
             "dom",
-            "es2015"
+            "es2017"
         ],
         "types": [
             "jest"
