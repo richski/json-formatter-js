@@ -1,21 +1,26 @@
 # JSON Formatter
 
-[![Build Status](https://travis-ci.org/mohsen1/json-formatter-js.svg?branch=master)](https://travis-ci.org/mohsen1/json-formatter-js)
-
 > Render JSON objects in HTML with a **collapsible** navigation.
 
 JSON Formatter started as an [AngularJS directive](https://github.com/mohsen1/json-formatter). This is pure JavaScript implementation of the same module.
 
 **[Live Demo](http://azimi.me/json-formatter-js/)**
 
+
+## Note: This is a forked and modified version
+
+It has been customised for use on an internal project, so I'd advise against using it as is.
+
+### What's been modified?
+
+- `pathsToCollapse` config property added, so you can specify branch paths to collapse on load.
+- Wraps long strings by default.
+- Compiled as `umd` using `es2017`, rather than `commonjs2` with `es2015`.
+- Includes the compiled source in `/dist/json-formatter.js`.
+
 ### Usage
 
-Install via npm
-
-```shell
-npm install --save json-formatter-js
-```
-include `json-formatter.js` from `dist` folder in your page.
+Include `json-formatter.js` from `dist` folder in your page.
 ```js
 import JSONFormatter from 'json-formatter-js'
 
